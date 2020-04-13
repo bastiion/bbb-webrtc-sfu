@@ -1,6 +1,6 @@
 kurento:
   - ip: ""
-    url: ws://127.0.0.1:8888/kurento
+    url: ws://kurento:8888/kurento
     # mediaType: (main|audio|content)
     ipClassMappings:
       local:
@@ -22,7 +22,7 @@ video-transposing-ceiling: 50
 audio-transposing-ceiling: 100
 localIpAddress: ""
 acceptSelfSignedCertificate: false
-redisHost: 127.0.0.1
+redisHost: redis 
 redisPort: "6379"
 # Uncomment to set a password if Redis requires auth.
 # redisPassword: foobared
@@ -64,10 +64,9 @@ mcs-host: 127.0.0.1
 mcs-address: localhost
 mcs-ws-timeout: 30000
 freeswitch:
-  ip: 127.0.0.1
-  sip_ip: 127.0.0.1
+  ip: bbb-freeswitch
   port: 5066
-  esl_ip: 127.0.0.1
+  esl_ip: bbb-freeswitch 
   esl_port: 8021
   handleExternalConnections: false
   ipClassMappings:
@@ -77,46 +76,6 @@ freeswitch:
 log:
   filename: /var/log/bbb-webrtc-sfu/bbb-webrtc-sfu.log
   level: verbose
-bbb-stream:
-  image_name: bbb-stream
-  container_type: docker
-  bigbluebutton_url: BBBHOST
-  bigbluebutton_secret: BBBSECRET
-  bot_name: BBBBOTNAME
-  bot_join_options:
-    userdata-html5autoswaplayout: false
-    userdata-html5hidepresentation: false
-    bot: true
-    joinViaHtml5: true
-  gop:
-    rnp: 5
-    youtube: 12
-    rtmp: 12
-  k8s:
-    namespace: default
-    template:
-      apiVersion: batch/v1
-      kind: Job
-      metadata:
-        name: bbb-stream-
-      spec:
-        template:
-          spec:
-            containers:
-            - name: bbb-stream-firefox
-              image: gcr.io/PROJECT-ID/bbb-stream
-              env:
-              - name: LINK
-                value: ""
-              - name: OUTPUT
-                value: ""
-              - name: "RTMP"
-                value: "rtmp"
-              - name: "GOP"
-                value: ""
-            restartPolicy: OnFailure
-        backoffLimit: 0
-
 rnp:
   oauth2:
     client_id: client_id
